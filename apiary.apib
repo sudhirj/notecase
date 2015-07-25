@@ -1,21 +1,32 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: http://notecase.apiblueprint.org/
 
-# notecase
+# Notecase
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+Notecase is a simple wallet microservice, suitable for for closed walled systems. It allows you to manage wallet accounts for your users while keeping track of recharges, spends, refunds and promotions. 
 
-# Polls API Root [/]
+# Account Types
+The Notecase system consists simply of accounts that allow the auditable flow of credit between them based on certain rules. There are broadly three kinds of supported accounts: 
 
-This resource does not have any attributes. Instead it offers the initial
-API affordances in the form of the links in the JSON body.
+1. **Wallets**: These are individual wallets that hold user credit balances. 
+2. **Rechargers**: These are accounts that can recharge user wallets with credit - they are typically payment processors or loyalty programs. 
+3. **Revenue**: These are the accounts that users spend their credit on. These may be product categories, like food and tickets, for example, or may be sales channels, like Web, iOS and Android. 
 
-It is recommend to follow the “url” link values,
-[Link](https://tools.ietf.org/html/rfc5988) or Location headers where
-applicable to retrieve resources. Instead of constructing your own URLs,
-to keep your client decoupled from implementation details.
+# Transaction Types
+Once the accounts are set up, three kinds of trasnactions are possible:
 
-## Retrieve the Entry Point [GET]
+1. **Recharge**: This recharges a wallet by withdrawing credit from a recharger - typically when a payment processor confirms a user's payment towards their wallet balance, or a loyalty award is given to the user.
+2. **Spend**: The user spends the credit in their wallet, towards a product or service revenue account. This is a typical user purchase.
+3. **Refund**: A revenue account either parially or fully returns a user's *spend*, typically because the purchse could not be completed or the product was faulty.
+
+## Group Account Management
+
+# Rechargers [/rechargers/{id}]
+
+Rechargers are accounts that put money into the wallets of your users - these may be payment providers like a credit card or net banking processor, or an loyalty program created to reward users with credit that they can spend inside the system.
+
+
+## Create a recharger [POST]
 
 + Response 200 (application/json)
 
@@ -23,7 +34,7 @@ to keep your client decoupled from implementation details.
             "questions_url": "/questions"
         }
 
-## Group Question
+## Group Transactions
 
 Resources related to questions in the API.
 
