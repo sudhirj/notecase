@@ -16,23 +16,99 @@ The Notecase system consists simply of accounts that allow the auditable flow of
 Once the accounts are set up, three kinds of trasnactions are possible:
 
 1. **Recharge**: This recharges a wallet by withdrawing credit from a recharger - typically when a payment processor confirms a user's payment towards their wallet balance, or a loyalty award is given to the user.
+
 2. **Spend**: The user spends the credit in their wallet, towards a product or service revenue account. This is a typical user purchase.
 3. **Refund**: A revenue account either parially or fully returns a user's *spend*, typically because the purchse could not be completed or the product was faulty.
 
 ## Group Account Management
 
-# Rechargers [/rechargers/{id}]
+## Wallet [/wallets]
 
-Rechargers are accounts that put money into the wallets of your users - these may be payment providers like a credit card or net banking processor, or an loyalty program created to reward users with credit that they can spend inside the system.
+Wallets are user accounts that hold their credit.
 
+## Create a wallet [POST]
 
-## Create a recharger [POST]
++ ref (string) - The external ID of user wallet
++ data (object) - An arbitrary JSON data associated with this wallet
+
++ Request (application/json)
+
+        {
+            "ref": "ABCD1234",
+            "data": {
+                "k1": "v1"
+            }
+        }
+
 
 + Response 200 (application/json)
 
         {
-            "questions_url": "/questions"
+            "ref": "ABCD1234",
+            "data": {
+                "k1": "v1"
+            },
+            "balance": 0.0
         }
+
+## Recharger [/rechargers]
+
+Rechargers are accounts that supply credit to user wallets.
+
+## Create a recharger [POST]
+
++ ref (string) - The external ID for the recharger
++ data (object) - An arbitrary JSON data associated with this recharger
+
++ Request (application/json)
+
+        {
+            "ref": "ABCD1234",
+            "data": {
+                "k1": "v1"
+            }
+        }
+
+
++ Response 200 (application/json)
+
+        {
+            "ref": "ABCD1234",
+            "data": {
+                "k1": "v1"
+            },
+            "balance": 0.0
+        }
+
+## Revenue [/revenues]
+
+Revenue accounts are those that receive credit from user wallets, usually in exchange for a product or service.
+
+## Create a recharger [POST]
+
++ ref (string) - The external ID for the recharger
++ data (object) - An arbitrary JSON data associated with this recharger
+
++ Request (application/json)
+
+        {
+            "ref": "ABCD1234",
+            "data": {
+                "k1": "v1"
+            }
+        }
+
+
++ Response 200 (application/json)
+
+        {
+            "ref": "ABCD1234",
+            "data": {
+                "k1": "v1"
+            },
+            "balance": 0.0
+        }
+
 
 ## Group Transactions
 
