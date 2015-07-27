@@ -235,7 +235,7 @@ The endpoint echoes the given transaction data with the timestamp at which it ha
 + `wallet_ref` (string) - The wallet to recharge
 + `revenue_ref` (string) - The revenue account to which the credit is spent
 + `amount` (integer) - The amount in the lowest subdivision of the applicable currency (usually *cents/USD* or *paisa/INR*)
-+ `data` (object) - Arbitrary JSON data associated with this recharge
++ `data` (object) - Arbitrary JSON data associated with this spend
 
 + Request (application/json)
 
@@ -256,6 +256,41 @@ The endpoint echoes the given transaction data with the timestamp at which it ha
             "ref": "ABCD1234",
             "wallet_ref": "WZYZ456",
             "revenue_ref": "HIJK7890",
+            "amount": 4200,
+            "data": {
+                "k1": "v1"
+            },
+            "timestamp": "2015-07-14T19:43:37+0530"
+        }
+
+
+## Refund [/refunds]
+
+Refunds a spend back into the user wallet. Notecase only supports full refunds for now. 
+
+## Create a refund [POST]
+
+This call is idempotent w.r.t the spend `ref` supplied. Refunds for the same `ref` are safe to retry after network issues without fear of double-refunding. If the 'ref' is not found, an error will be thrown.
+
+The endpoint echoes the given transaction data with the timestamp at which it has been applied. 
+
++ `ref` (string) - The `ref` of the spend which is to be refunded
++ `data` (object) - Arbitrary JSON data associated with this refund
+
++ Request (application/json)
+
+        {
+            "ref": "ABCD1234",
+            "data": {
+                "k1": "v1"
+            }
+        }
+
+
++ Response 200 (application/json)
+
+        {
+            "ref": "ABCD1234",
             "amount": 4200,
             "data": {
                 "k1": "v1"
