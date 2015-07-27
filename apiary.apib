@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: http://notecase.apiblueprint.org/
+HOST: http://notecase.example.com/v1/
 
 # Notecase
 
@@ -16,20 +16,33 @@ The Notecase system consists simply of accounts that allow the auditable flow of
 Once the accounts are set up, three kinds of trasnactions are possible:
 
 1. **Recharge**: This recharges a wallet by withdrawing credit from a recharger - typically when a payment processor confirms a user's payment towards their wallet balance, or a loyalty award is given to the user.
-
 2. **Spend**: The user spends the credit in their wallet, towards a product or service revenue account. This is a typical user purchase.
 3. **Refund**: A revenue account either parially or fully returns a user's *spend*, typically because the purchse could not be completed or the product was faulty.
 
+# Double Entry Accounting
+Notecase follows the double entry accounting protocol. This is how the API concepts relate to normal acounting practices:
+
+* *Rechargers* are **Asset** accounts, and thus tend to have an internal negative balance.
+* *Wallets* are **Liability** accounts, where the credit is owed to the users.
+* *Revenues* are **Owner's Equity** accounts, because these are revnues that the owner of the system has earned.
+* Going by the standard equation, **Assets = Liabilities + Owner's Equity**. This equation should always hold true, and is used internally and externally to balance the books.
+* A *Recharge* transaction will move credit from a  Recharger (Asset) to a Wallet (Liability).
+* A *Spend* transaction will move credit from a  Wallet (Liability) to a revenue account (Owner's Equity).
+* A *Refund* transaction will move credit from a  Revenue account (Owner's Equity) to a Wallet (Liability).
 ## Group Account Management
 
-## Wallet [/wallets]
+These calls relate to account management, including creating accounts and checking balances.
+
+## Wallet [/wallets/{id}]
 
 Wallets are user accounts that hold their credit.
 
 ## Create a wallet account [POST]
 
-+ ref (string) - The external ID of the user wallet
-+ data (object) - An arbitrary JSON data associated with this wallet
+This call is idempotent w.r.t the `ref` supplied. The JSON `data` is opaque and used only for the client's reference.
+
++ `ref` (string) - The external ID of the user wallet
++ `data` (object) - An arbitrary JSON data associated with this wallet
 
 + Request (application/json)
 
@@ -57,8 +70,10 @@ Rechargers are accounts that supply credit to user wallets.
 
 ## Create a recharger account [POST]
 
-+ ref (string) - The external ID for the recharger
-+ data (object) - An arbitrary JSON data associated with this recharger
+This call is idempotent w.r.t the `ref` supplied. The JSON `data` is opaque and used only for the client's reference.
+
++ `ref` (string) - The external ID for the recharger
++ `data` (object) - An arbitrary JSON data associated with this recharger
 
 + Request (application/json)
 
@@ -86,8 +101,10 @@ Revenue accounts are those that receive credit from user wallets, usually in exc
 
 ## Create a revenue account [POST]
 
-+ ref (string) - The external ID for the revenue stream
-+ data (object) - An arbitrary JSON data associated with this recharger
+This call is idempotent w.r.t the `ref` supplied. The JSON `data` is opaque and used only for the client's reference.
+
++ `ref` (string) - The external ID for the revenue stream
++ `data` (object) - An arbitrary JSON data associated with this recharger
 
 + Request (application/json)
 
@@ -112,5 +129,5 @@ Revenue accounts are those that receive credit from user wallets, usually in exc
 
 ## Group Transactions
 
-Resources related to transactions in the API.
+These calls deal with moving credit around in the system. 
 
