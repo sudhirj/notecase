@@ -270,7 +270,7 @@ Refunds a spend back into the user wallet. Notecase only supports full refunds f
 
 ## Create a refund [POST]
 
-This call is idempotent w.r.t the spend `ref` supplied. Refunds for the same `ref` are safe to retry after network issues without fear of double-refunding. If the 'ref' is not found, an error will be thrown.
+This call is idempotent w.r.t the spend `ref` supplied. Refunds for the same `ref` are safe to retry after network issues without fear of double-refunding. If the `ref` is not found, an error will be thrown.
 
 The endpoint echoes the given transaction data with the timestamp at which it has been applied. 
 
