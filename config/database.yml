@@ -1,0 +1,16 @@
+default: &default
+  adapter: postgresql
+  pool: 5
+  timeout: 5000
+
+development:
+  <<: *default
+  database: notecase_development
+
+test:
+  <<: *default
+  database: notecase_test
+
+production:
+  <<: *default
+  database: notecase_production
