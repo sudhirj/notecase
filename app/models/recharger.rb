@@ -1,0 +1,2 @@
+class Recharger < Account
+end
