@@ -1,0 +1,2 @@
+class Recharge < Transaction
+end
