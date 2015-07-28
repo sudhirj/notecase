@@ -220,6 +220,39 @@ CREATE TABLE schema_migrations (
 
 
 --
+-- Name: transactions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE transactions (
+    id integer NOT NULL,
+    type character varying,
+    ref character varying NOT NULL,
+    data jsonb,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: transactions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE transactions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: transactions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE transactions_id_seq OWNED BY transactions.id;
+
+
+--
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -252,6 +285,13 @@ ALTER TABLE ONLY double_entry_line_checks ALTER COLUMN id SET DEFAULT nextval('d
 --
 
 ALTER TABLE ONLY double_entry_lines ALTER COLUMN id SET DEFAULT nextval('double_entry_lines_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY transactions ALTER COLUMN id SET DEFAULT nextval('transactions_id_seq'::regclass);
 
 
 --
@@ -295,6 +335,14 @@ ALTER TABLE ONLY double_entry_lines
 
 
 --
+-- Name: transactions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY transactions
+    ADD CONSTRAINT transactions_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: index_account_balances_on_account; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -313,6 +361,13 @@ CREATE UNIQUE INDEX index_account_balances_on_scope_and_account ON double_entry_
 --
 
 CREATE UNIQUE INDEX index_accounts_on_ref ON accounts USING btree (ref);
+
+
+--
+-- Name: index_transactions_on_ref; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_transactions_on_ref ON transactions USING btree (ref);
 
 
 --
@@ -366,4 +421,6 @@ SET search_path TO "$user",public;
 INSERT INTO schema_migrations (version) VALUES ('20150728143130');
 
 INSERT INTO schema_migrations (version) VALUES ('20150728143914');
+
+INSERT INTO schema_migrations (version) VALUES ('20150728145908');
 
