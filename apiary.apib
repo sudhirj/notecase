@@ -1,0 +1,304 @@
+FORMAT: 1A
+HOST: http://notecase.example.com/v1/
+
+# Notecase
+
+Notecase is a simple wallet microservice, suitable for for closed walled systems. It allows you to manage wallet accounts for your users while keeping track of recharges, spends, refunds and promotions. 
+
+# Account Types
+The Notecase system consists simply of accounts that allow the auditable flow of credit between them based on certain rules. There are broadly three kinds of supported accounts: 
+
+1. **Wallets**: These are individual wallets that hold user credit balances. 
+2. **Rechargers**: These are accounts that can recharge user wallets with credit - they are typically payment processors or loyalty programs. 
+3. **Revenue**: These are the accounts that users spend their credit on. These may be product categories, like food and tickets, for example, or may be sales channels, like Web, iOS and Android. 
+
+# Transaction Types
+Once the accounts are set up, three kinds of trasnactions are possible:
+
+1. **Recharge**: This recharges a wallet by withdrawing credit from a recharger - typically when a payment processor confirms a user's payment towards their wallet balance, or a loyalty award is given to the user.
+2. **Spend**: The user spends the credit in their wallet, towards a product or service revenue account. This is a typical user purchase.
+3. **Refund**: A revenue account either parially or fully returns a user's *spend*, typically because the purchse could not be completed or the product was faulty.
+
+# Double Entry Accounting
+Notecase follows the double entry accounting protocol. This is how the API concepts relate to normal acounting practices:
+
+* *Rechargers* are **Asset** accounts, and thus tend to have an internal negative balance.
+* *Wallets* are **Liability** accounts, where the credit is owed to the users.
+* *Revenues* are **Owner's Equity** accounts, because these are revenues that the owner of the system has earned.
+* Going by the standard equation, **Assets = Liabilities + Owner's Equity**. This equation should always hold true, and is used internally and externally to balance the books.
+* A *Recharge* transaction will move credit from a  Recharger (Asset) to a Wallet (Liability).
+* A *Spend* transaction will move credit from a  Wallet (Liability) to a revenue account (Owner's Equity).
+* A *Refund* transaction will move credit from a  Revenue account (Owner's Equity) to a Wallet (Liability).
+
+## Group Account Creation
+
+These calls relate to account management, including creating accounts and checking balances.
+
+## Wallets [/wallets]
+
+Wallets are user accounts that hold their credit.
+
+## Create a wallet account [POST]
+
+This call is idempotent w.r.t the `ref` supplied. The JSON `data` is opaque and used only for the client's reference.
+
++ `ref` (string) - The external ID of the user wallet
++ `data` (object) - Arbitrary JSON data associated with this wallet
+
++ Request (application/json)
+
+        {
+            "ref": "ABCD1234",
+            "data": {
+                "k1": "v1"
+            }
+        }
+
+
++ Response 200 (application/json)
+
+        {
+            "ref": "ABCD1234",
+            "data": {
+                "k1": "v1"
+            },
+            "balance": 0.0
+        }
+
+## Rechargers [/rechargers]
+
+Rechargers are accounts that supply credit to user wallets.
+
+## Create a recharger account [POST]
+
+This call is idempotent w.r.t the `ref` supplied. The JSON `data` is opaque and used only for the client's reference.
+
++ `ref` (string) - The external ID for the recharger
++ `data` (object) - Arbitrary JSON data associated with this recharger
+
++ Request (application/json)
+
+        {
+            "ref": "ABCD1234",
+            "data": {
+                "k1": "v1"
+            }
+        }
+
+
++ Response 200 (application/json)
+
+        {
+            "ref": "ABCD1234",
+            "data": {
+                "k1": "v1"
+            },
+            "balance": 0.0
+        }
+
+## Revenue [/revenues]
+
+Revenue accounts are those that receive credit from user wallets, usually in exchange for a product or service.
+
+## Create a revenue account [POST]
+
+This call is idempotent w.r.t the `ref` supplied. The JSON `data` is opaque and used only for the client's reference.
+
++ `ref` (string) - The external ID for the revenue stream
++ `data` (object) - Arbitrary JSON data associated with this recharger
+
++ Request (application/json)
+
+        {
+            "ref": "ABCD1234",
+            "data": {
+                "k1": "v1"
+            }
+        }
+
+
++ Response 200 (application/json)
+
+        {
+            "ref": "ABCD1234",
+            "data": {
+                "k1": "v1"
+            },
+            "balance": 0.0
+        }
+
+## Group Account Information
+
+
+## Wallet [/wallets/{ref}]
+
+## Check a wallet balance [GET]
+Check the current balance of a wallet.
+
++ Response 200 (application/json)
+
+        {
+            "ref": "ABCD1234",
+            "data": {
+                "k1": "v1"
+            },
+            "balance": 0.0
+        }
+
+## Recharger [/rechargers/{ref}]
+
+## Check a recharger total [GET]
+Check the total recharged amount till date for a recharger.
+
++ Response 200 (application/json)
+
+        {
+            "ref": "ABCD1234",
+            "data": {
+                "k1": "v1"
+            },
+            "balance": 0.0
+        }
+
+## Revenue [/revenues/{ref}]
+
+## Get total revenue [GET]
+Check the total revenue till date for a revenue stream.
+
++ Response 200 (application/json)
+
+        {
+            "ref": "ABCD1234",
+            "data": {
+                "k1": "v1"
+            },
+            "balance": 0.0
+        }
+
+## Group Transaction Creation
+
+These calls deal with moving credit around inside the system.
+
+## Recharge [/recharges]
+
+Recharges supply credit into a wallet from a recharger account.
+
+## Create a recharge [POST]
+
+This call is idempotent w.r.t the `ref` supplied. Transactions with the same `ref` are safe to retry after network issues without fear of double charging. Every `ref` needs to be globally uniqe across all transactions.
+
+The endpoint echoes the given transaction data with the timestamp at which it has been applied. 
+
++ `ref` (string) - The external ID for the recharge transaction
++ `wallet_ref` (string) - The wallet to recharge
++ `recharger_ref` (string) - The recharger from which the wallet is to be recharged
++ `amount` (integer) - The amount in the lowest subdivision of the applicable currency (usually *cents/USD* or *paisa/INR*)
++ `data` (object) - Arbitrary JSON data associated with this recharge
+
++ Request (application/json)
+
+        {
+            "ref": "ABCD1234",
+            "wallet_ref": "WZYZ456",
+            "recharger_ref": "HIJK7890",
+            "amount": 4200,
+            "data": {
+                "k1": "v1"
+            }
+        }
+
+
++ Response 200 (application/json)
+
+        {
+            "ref": "ABCD1234",
+            "wallet_ref": "WZYZ456",
+            "recharger_ref": "HIJK7890",
+            "amount": 4200,
+            "data": {
+                "k1": "v1"
+            },
+            "timestamp": "2015-07-14T19:43:37+0530"
+        }
+
+## Spend [/spends]
+
+Spends spend user wallet credit into a revenue account.
+
+## Create a spend [POST]
+
+This call is idempotent w.r.t the `ref` supplied. Transactions with the same `ref` are safe to retry after network issues without fear of double charging. Every `ref` needs to be globally uniqe across all transactions.
+
+The endpoint echoes the given transaction data with the timestamp at which it has been applied. 
+
++ `ref` (string) - The external ID for the spend transaction
++ `wallet_ref` (string) - The wallet to recharge
++ `revenue_ref` (string) - The revenue account to which the credit is spent
++ `amount` (integer) - The amount in the lowest subdivision of the applicable currency (usually *cents/USD* or *paisa/INR*)
++ `data` (object) - Arbitrary JSON data associated with this spend
+
++ Request (application/json)
+
+        {
+            "ref": "ABCD1234",
+            "wallet_ref": "WZYZ456",
+            "revenue_ref": "HIJK7890",
+            "amount": 4200,
+            "data": {
+                "k1": "v1"
+            }
+        }
+
+
++ Response 200 (application/json)
+
+        {
+            "ref": "ABCD1234",
+            "wallet_ref": "WZYZ456",
+            "revenue_ref": "HIJK7890",
+            "amount": 4200,
+            "data": {
+                "k1": "v1"
+            },
+            "timestamp": "2015-07-14T19:43:37+0530"
+        }
+
+
+## Refund [/refunds]
+
+Refunds a spend back into the user wallet. Notecase only supports full refunds for now. 
+
+## Create a refund [POST]
+
+This call is idempotent w.r.t the spend `ref` supplied. Refunds for the same `ref` are safe to retry after network issues without fear of double-refunding. If the `ref` is not found, an error will be thrown.
+
+The endpoint echoes the given transaction data with the timestamp at which it has been applied. 
+
++ `ref` (string) - The `ref` of the spend which is to be refunded
++ `data` (object) - Arbitrary JSON data associated with this refund
+
++ Request (application/json)
+
+        {
+            "ref": "ABCD1234",
+            "data": {
+                "k1": "v1"
+            }
+        }
+
+
++ Response 200 (application/json)
+
+        {
+            "ref": "ABCD1234",
+            "amount": 4200,
+            "data": {
+                "k1": "v1"
+            },
+            "timestamp": "2015-07-14T19:43:37+0530"
+        }
+
+
+
+
+
