@@ -10,8 +10,8 @@ DoubleEntry.configure do |config|
   end
 
   config.define_transfers do |transfers|
-    transfers.define(code: :recharge, from: :recharger, to: :wallet)
-    transfers.define(code: :spend, from: :wallet, to: :revenue)
-    transfers.define(code: :refund, from: :revenue, to: :wallet)
+    transfers.define(from: :recharger, to: :wallet, code: :recharge)
+    transfers.define(from: :wallet, to: :revenue, code: :spend)
+    transfers.define(from: :revenue, to: :wallet, code: :refund)
   end
 end
