@@ -10,5 +10,5 @@ class ActiveSupport::TestCase
     config.running_inside_transactional_fixtures = true
   end
 
-  # Add more helper methods to be used by all tests here...
+  # ActiveRecord::Base.logger = Logger.new(STDOUT)
 end
