@@ -1,5 +1,5 @@
 class Transaction < ActiveRecord::Base
-  def self.perform from, to, amount, ref, data
+  def self.perform from, to, amount, ref, data={}
     from_account = from.ledger_account
     to_account = to.ledger_account
 
@@ -8,7 +8,7 @@ class Transaction < ActiveRecord::Base
         transaction = self.where(ref: ref).first
         return unless transaction.nil? # a transaction with this ref has already been created. Exit.
 
-        self.create ref: ref, data: data
+        transaction = self.create ref: ref, data: data
 
         DoubleEntry.transfer Money.new(amount),
                 from: from_account,
@@ -17,5 +17,6 @@ class Transaction < ActiveRecord::Base
                 code: self.name.downcase.to_sym # DoubleEntry will make sure only the registered subclasses are used
       end
     end
+    self.where(ref: ref).first
   end
 end

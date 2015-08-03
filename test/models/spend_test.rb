@@ -22,6 +22,10 @@ class SpendTest < ActiveSupport::TestCase
     assert_equal 50_00, food.balance
     assert_equal 10_00, wallet1.balance
 
+    wallet1.spend(food, 5_00, 'cutlet', {})
+    assert_equal 55_00, food.balance
+    assert_equal 5_00, wallet1.balance
+
     assert_raises(DoubleEntry::AccountWouldBeSentNegative) do
       wallet1.spend(tickets, 40_00, 'movie2', {})
     end
