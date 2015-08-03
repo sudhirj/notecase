@@ -5,4 +5,8 @@ gem 'pg'
 gem 'unicorn'
 gem 'double_entry'
 
-gem 'spring', :group => :development
+group :development do
+  gem 'spring'
+  gem 'guard-minitest'
+  gem 'guard'
+end
