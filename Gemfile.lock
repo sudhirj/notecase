@@ -151,6 +151,7 @@ DEPENDENCIES
   guard
   guard-minitest
   pg
+  pry
   rails (= 4.2.3)
   rails-api
   spring

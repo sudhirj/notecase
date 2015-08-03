@@ -10,3 +10,5 @@ group :development do
   gem 'guard-minitest'
   gem 'guard'
 end
+
+gem 'pry', group: [:development, :test]
