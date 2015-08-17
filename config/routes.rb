@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  resources :rechargers, except: [:new, :edit]
-  resources :wallets, except: [:new, :edit]
-  resources :revenues, except: [:new, :edit]
+  resources :rechargers, except: [:new, :edit, :update, :destroy]
+  resources :wallets, except: [:new, :edit, :update, :destroy]
+  resources :revenues, except: [:new, :edit, :update, :destroy]
 
-  resources :recharge, except: [:new, :edit]
-  resources :spend, except: [:new, :edit]
-  resources :refund, except: [:new, :edit]
+  resources :recharges, except: [:new, :edit, :update, :destroy]
+  resources :spends, except: [:new, :edit, :update, :destroy]
+  resources :refunds, except: [:new, :edit, :update, :destroy]
 end
