@@ -26,9 +26,8 @@ class SpendTest < ActiveSupport::TestCase
     assert_equal 55_00, food.balance
     assert_equal 5_00, wallet1.balance
 
-    assert_raises(DoubleEntry::AccountWouldBeSentNegative) do
-      wallet1.spend(tickets, 40_00, 'movie2', {})
-    end
+    wallet1.spend(tickets, 40_00, 'movie2', {})
+    assert_equal -35_00, wallet1.balance # allow negative balances
 
     assert_equal 0, [card, wallet1, food, tickets].map(&:balance).sum
   end
