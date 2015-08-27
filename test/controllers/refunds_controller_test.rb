@@ -16,7 +16,8 @@ class RefundsControllerTest < ActionController::TestCase
       ref: "ABCD1234",
       data: {
         "k1": "v1"
-      }
+      },
+      token: ENV['TOKEN']
     }
 
     assert_equal 0, r1.balance
@@ -27,7 +28,8 @@ class RefundsControllerTest < ActionController::TestCase
         ref: "ABCD1234",
         data: {
           "k1": "v1"
-        }
+        },
+        token: ENV['TOKEN']
       }
     end
 

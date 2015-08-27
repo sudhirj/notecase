@@ -8,6 +8,7 @@ module AccountControllerTester
   extend ActiveSupport::Concern
   included do
     test "creating and updating" do
+      @request.headers["Authorization"] = "token #{ENV['TOKEN']}"
       def make_assertions
         assert_equal 1, model.count
         created_account = model.first

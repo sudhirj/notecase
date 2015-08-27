@@ -13,7 +13,8 @@ class SpendsControllerTest < ActionController::TestCase
       amount: 4200,
       data: {
         "k1": "v1"
-      }
+      },
+      token: ENV['TOKEN']
     }
 
     assert_equal 42_00, r1.balance
@@ -28,7 +29,8 @@ class SpendsControllerTest < ActionController::TestCase
         amount: 4200,
         data: {
           "k1": "v1"
-        }
+        },
+        token: ENV['TOKEN']
       }
     end
 
