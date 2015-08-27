@@ -1,0 +1,16 @@
+{
+  "name": "Notecase",
+  "description": "A simple wallet API",
+  "repository": "https://github.com/sudhirj/notecase",
+  "keywords": ["ruby", "rails", "double-entry", "wallet"],
+  "env": {
+    "TOKEN": {
+      "description": "The auth token for this deployment",
+      "generator": "secret"
+    }
+  },
+  "image": "heroku/ruby",
+  "addons": [
+    "heroku-postgresql:hobby-dev"
+  ]
+}
