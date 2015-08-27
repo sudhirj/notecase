@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   resources :recharges, except: [:new, :edit, :update, :destroy]
   resources :spends, except: [:new, :edit, :update, :destroy]
   resources :refunds, except: [:new, :edit, :update, :destroy]
+
+  get '/', to: 'home#index'
 end
