@@ -20,7 +20,7 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
 --
 
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+-- COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 SET search_path = public, pg_catalog;
@@ -30,7 +30,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: accounts; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: accounts; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE accounts (
@@ -63,7 +63,7 @@ ALTER SEQUENCE accounts_id_seq OWNED BY accounts.id;
 
 
 --
--- Name: double_entry_account_balances; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: double_entry_account_balances; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE double_entry_account_balances (
@@ -96,7 +96,7 @@ ALTER SEQUENCE double_entry_account_balances_id_seq OWNED BY double_entry_accoun
 
 
 --
--- Name: double_entry_line_aggregates; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: double_entry_line_aggregates; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE double_entry_line_aggregates (
@@ -138,7 +138,7 @@ ALTER SEQUENCE double_entry_line_aggregates_id_seq OWNED BY double_entry_line_ag
 
 
 --
--- Name: double_entry_line_checks; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: double_entry_line_checks; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE double_entry_line_checks (
@@ -171,7 +171,7 @@ ALTER SEQUENCE double_entry_line_checks_id_seq OWNED BY double_entry_line_checks
 
 
 --
--- Name: double_entry_lines; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: double_entry_lines; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE double_entry_lines (
@@ -211,7 +211,7 @@ ALTER SEQUENCE double_entry_lines_id_seq OWNED BY double_entry_lines.id;
 
 
 --
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE schema_migrations (
@@ -220,7 +220,7 @@ CREATE TABLE schema_migrations (
 
 
 --
--- Name: transactions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: transactions; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE transactions (
@@ -295,7 +295,7 @@ ALTER TABLE ONLY transactions ALTER COLUMN id SET DEFAULT nextval('transactions_
 
 
 --
--- Name: accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY accounts
@@ -303,7 +303,7 @@ ALTER TABLE ONLY accounts
 
 
 --
--- Name: double_entry_account_balances_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: double_entry_account_balances_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY double_entry_account_balances
@@ -311,7 +311,7 @@ ALTER TABLE ONLY double_entry_account_balances
 
 
 --
--- Name: double_entry_line_aggregates_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: double_entry_line_aggregates_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY double_entry_line_aggregates
@@ -319,7 +319,7 @@ ALTER TABLE ONLY double_entry_line_aggregates
 
 
 --
--- Name: double_entry_line_checks_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: double_entry_line_checks_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY double_entry_line_checks
@@ -327,7 +327,7 @@ ALTER TABLE ONLY double_entry_line_checks
 
 
 --
--- Name: double_entry_lines_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: double_entry_lines_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY double_entry_lines
@@ -335,7 +335,7 @@ ALTER TABLE ONLY double_entry_lines
 
 
 --
--- Name: transactions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: transactions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY transactions
@@ -343,70 +343,70 @@ ALTER TABLE ONLY transactions
 
 
 --
--- Name: index_account_balances_on_account; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_account_balances_on_account; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_account_balances_on_account ON double_entry_account_balances USING btree (account);
 
 
 --
--- Name: index_account_balances_on_scope_and_account; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_account_balances_on_scope_and_account; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE UNIQUE INDEX index_account_balances_on_scope_and_account ON double_entry_account_balances USING btree (scope, account);
 
 
 --
--- Name: index_accounts_on_ref; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_accounts_on_ref; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE UNIQUE INDEX index_accounts_on_ref ON accounts USING btree (ref);
 
 
 --
--- Name: index_transactions_on_ref; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_transactions_on_ref; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE UNIQUE INDEX index_transactions_on_ref ON transactions USING btree (ref);
 
 
 --
--- Name: line_aggregate_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: line_aggregate_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX line_aggregate_idx ON double_entry_line_aggregates USING btree (function, account, code, year, month, week, day);
 
 
 --
--- Name: lines_account_code_created_at_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: lines_account_code_created_at_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX lines_account_code_created_at_idx ON double_entry_lines USING btree (account, code, created_at);
 
 
 --
--- Name: lines_account_created_at_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: lines_account_created_at_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX lines_account_created_at_idx ON double_entry_lines USING btree (account, created_at);
 
 
 --
--- Name: lines_scope_account_created_at_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: lines_scope_account_created_at_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX lines_scope_account_created_at_idx ON double_entry_lines USING btree (scope, account, created_at);
 
 
 --
--- Name: lines_scope_account_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: lines_scope_account_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX lines_scope_account_id_idx ON double_entry_lines USING btree (scope, account, id);
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
@@ -423,4 +423,3 @@ INSERT INTO schema_migrations (version) VALUES ('20150728143130');
 INSERT INTO schema_migrations (version) VALUES ('20150728143914');
 
 INSERT INTO schema_migrations (version) VALUES ('20150728145908');
-
