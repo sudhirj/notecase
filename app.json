@@ -9,6 +9,9 @@
       "generator": "secret"
     }
   },
+  "scripts": {
+    "postdeploy": "bundle exec rake db:structure:load"
+  },
   "image": "heroku/ruby",
   "addons": [
     "heroku-postgresql:hobby-dev"
