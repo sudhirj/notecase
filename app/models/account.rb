@@ -6,7 +6,9 @@ class Account < ActiveRecord::Base
   end
 
   def ledger_account
-    DoubleEntry.account(self.class.name.downcase.to_sym, scope: self.ref)
+    DoubleEntry.account(self.class.name.downcase.to_sym, scope: self.id)
   end
+
+
 
 end

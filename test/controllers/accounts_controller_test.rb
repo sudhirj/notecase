@@ -32,6 +32,15 @@ module AccountControllerTester
       assert_equal 'v1', model.where(ref: 'efgh5678').first.data["k2"]
     end
 
+    test "show balance and info" do
+      post :create, {ref: 'abcd1234', data: {k1: 'v1'}, token: ENV['TOKEN']}
+      get :show, {id: 'abcd1234', token: ENV['TOKEN']}
+      account_data = JSON.parse response.body
+      assert_equal 'abcd1234', account_data["ref"]
+      assert_equal 0, account_data["balance"]
+      assert_equal({"k1" => "v1"}, account_data["data"])
+    end
+
     def model
       raise "Subclass for tests"
     end
