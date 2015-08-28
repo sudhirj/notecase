@@ -162,6 +162,3 @@ DEPENDENCIES
   rails_12factor
   spring
   unicorn
-
-BUNDLED WITH
-   1.10.4
