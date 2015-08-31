@@ -33,7 +33,8 @@ module AccountControllerTester
     end
 
     test "show balance and info" do
-      post :create, {ref: 'abcd1234', data: {k1: 'v1'}, token: ENV['TOKEN']}
+      @request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials(ENV['TOKEN'], nil)
+      post :create, {ref: 'abcd1234', data: {k1: 'v1'}}
       get :show, {id: 'abcd1234', token: ENV['TOKEN']}
       account_data = JSON.parse response.body
       assert_equal 'abcd1234', account_data["ref"]
