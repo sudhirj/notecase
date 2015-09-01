@@ -16,6 +16,7 @@ class RechargesControllerTest < ActionController::TestCase
       },
       token: ENV['TOKEN']
     }
+    assert_equal "v1", Recharge.where(ref: "ABCD1234").first.data["k1"]
 
     assert_equal -42_00, r1.balance
     assert_equal 42_00, w1.balance
@@ -28,11 +29,14 @@ class RechargesControllerTest < ActionController::TestCase
         recharger: r1.ref,
         amount: 4200,
         data: {
-          "k1": "v1"
+          "k1": "v2"
         },
         token: ENV['TOKEN']
       }
     end
+
+    assert_equal "v1", Recharge.where(ref: "ABCD1234").first.data["k1"]
+    # Transaction metadata should be immutable. Only account metadata is mutable.
 
     assert_equal -42_00, r1.balance
     assert_equal 42_00, w1.balance
