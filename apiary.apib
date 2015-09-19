@@ -193,8 +193,8 @@ This call is idempotent w.r.t the `ref` supplied. Transactions with the same `re
 The endpoint echoes the given transaction data with the timestamp at which it has been applied. 
 
 + `ref` (string) - The external ID for the recharge transaction
-+ `wallet_ref` (string) - The wallet to recharge
-+ `recharger_ref` (string) - The recharger from which the wallet is to be recharged
++ `wallet` (string) - The wallet to recharge
++ `recharger` (string) - The recharger from which the wallet is to be recharged
 + `amount` (integer) - The amount in the lowest subdivision of the applicable currency (usually *cents/USD* or *paisa/INR*)
 + `data` (object) - Arbitrary JSON data associated with this recharge
 
@@ -236,8 +236,8 @@ This call is idempotent w.r.t the `ref` supplied. Transactions with the same `re
 The endpoint echoes the given transaction data with the timestamp at which it has been applied. 
 
 + `ref` (string) - The external ID for the spend transaction
-+ `wallet_ref` (string) - The wallet to recharge
-+ `revenue_ref` (string) - The revenue account to which the credit is spent
++ `wallet` (string) - The wallet to recharge
++ `revenue` (string) - The revenue account to which the credit is spent
 + `amount` (integer) - The amount in the lowest subdivision of the applicable currency (usually *cents/USD* or *paisa/INR*)
 + `data` (object) - Arbitrary JSON data associated with this spend
 
