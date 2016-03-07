@@ -34,7 +34,7 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE accounts (
-    id integer NOT NULL,
+    id bigint NOT NULL,
     type character varying,
     ref character varying NOT NULL,
     data jsonb,
@@ -67,7 +67,7 @@ ALTER SEQUENCE accounts_id_seq OWNED BY accounts.id;
 --
 
 CREATE TABLE double_entry_account_balances (
-    id integer NOT NULL,
+    id bigint NOT NULL,
     account character varying(31) NOT NULL,
     scope character varying(23),
     balance integer NOT NULL,
@@ -100,7 +100,7 @@ ALTER SEQUENCE double_entry_account_balances_id_seq OWNED BY double_entry_accoun
 --
 
 CREATE TABLE double_entry_line_aggregates (
-    id integer NOT NULL,
+    id bigint NOT NULL,
     function character varying(15) NOT NULL,
     account character varying(31) NOT NULL,
     code character varying(47),
@@ -142,8 +142,8 @@ ALTER SEQUENCE double_entry_line_aggregates_id_seq OWNED BY double_entry_line_ag
 --
 
 CREATE TABLE double_entry_line_checks (
-    id integer NOT NULL,
-    last_line_id integer NOT NULL,
+    id bigint NOT NULL,
+    last_line_id bigint NOT NULL,
     errors_found boolean NOT NULL,
     log text,
     created_at timestamp without time zone NOT NULL,
@@ -175,8 +175,8 @@ ALTER SEQUENCE double_entry_line_checks_id_seq OWNED BY double_entry_line_checks
 --
 
 CREATE TABLE double_entry_line_metadata (
-    id integer NOT NULL,
-    line_id integer NOT NULL,
+    id bigint NOT NULL,
+    line_id bigint NOT NULL,
     key character varying(48) NOT NULL,
     value character varying(64) NOT NULL,
     created_at timestamp without time zone NOT NULL,
@@ -208,16 +208,16 @@ ALTER SEQUENCE double_entry_line_metadata_id_seq OWNED BY double_entry_line_meta
 --
 
 CREATE TABLE double_entry_lines (
-    id integer NOT NULL,
+    id bigint NOT NULL,
     account character varying(31) NOT NULL,
     scope character varying(23),
     code character varying(47) NOT NULL,
     amount integer NOT NULL,
     balance integer NOT NULL,
-    partner_id integer,
+    partner_id bigint,
     partner_account character varying(31) NOT NULL,
     partner_scope character varying(23),
-    detail_id integer,
+    detail_id bigint,
     detail_type character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -257,7 +257,7 @@ CREATE TABLE schema_migrations (
 --
 
 CREATE TABLE transactions (
-    id integer NOT NULL,
+    id bigint NOT NULL,
     type character varying,
     ref character varying NOT NULL,
     data jsonb,
@@ -480,4 +480,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150728143914');
 INSERT INTO schema_migrations (version) VALUES ('20150728145908');
 
 INSERT INTO schema_migrations (version) VALUES ('20150828044630');
+
+INSERT INTO schema_migrations (version) VALUES ('20160307061649');
 
