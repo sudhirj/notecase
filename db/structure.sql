@@ -70,7 +70,7 @@ CREATE TABLE double_entry_account_balances (
     id bigint NOT NULL,
     account character varying(31) NOT NULL,
     scope character varying(23),
-    balance integer NOT NULL,
+    balance bigint NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -110,7 +110,7 @@ CREATE TABLE double_entry_line_aggregates (
     week integer,
     day integer,
     hour integer,
-    amount integer NOT NULL,
+    amount bigint NOT NULL,
     filter character varying,
     range_type character varying(15) NOT NULL,
     created_at timestamp without time zone NOT NULL,
@@ -212,8 +212,8 @@ CREATE TABLE double_entry_lines (
     account character varying(31) NOT NULL,
     scope character varying(23),
     code character varying(47) NOT NULL,
-    amount integer NOT NULL,
-    balance integer NOT NULL,
+    amount bigint NOT NULL,
+    balance bigint NOT NULL,
     partner_id bigint,
     partner_account character varying(31) NOT NULL,
     partner_scope character varying(23),
@@ -482,4 +482,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150728145908');
 INSERT INTO schema_migrations (version) VALUES ('20150828044630');
 
 INSERT INTO schema_migrations (version) VALUES ('20160307061649');
+
+INSERT INTO schema_migrations (version) VALUES ('20160307065054');
 
