@@ -8,12 +8,12 @@ default: &default
 
 development:
   <<: *default
-  database: notecase_development #CHANGE ME
+  database: notecase_development 
 
 test:
   <<: *default
-  database: notecase_test #CHANGE ME
+  database: notecase_test 
 
 production:
   <<: *default
-  database: notecase #CHANGE ME
+  database: notecase_production
