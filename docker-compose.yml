@@ -1,0 +1,21 @@
+app:
+  build: .
+  env_file: .env
+  environment:
+    RAILS_ENV: $RAILS_ENV
+  links:
+    - db
+  expose:
+    - "3000"
+db:
+  image: postgres:9.4.5
+  volumes:
+    - docker-example-postgres:/var/lib/postgresql/data
+web:
+  build: .
+  dockerfile: config/containers/Dockerfile-nginx
+  links:
+    - app
+  ports:
+    - "80:80"
+    - "443:443"

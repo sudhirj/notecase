@@ -1,16 +1,19 @@
 default: &default
   adapter: postgresql
-  pool: 5
-  timeout: 5000
+  encoding: unicode
+  host: db
+  port: 5432
+  username: postgres
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
 
 development:
   <<: *default
-  database: notecase_development
+  database: notecase_development #CHANGE ME
 
 test:
   <<: *default
-  database: notecase_test
+  database: notecase_test #CHANGE ME
 
 production:
   <<: *default
-  database: notecase_production
+  database: notecase #CHANGE ME
