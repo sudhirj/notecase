@@ -2,35 +2,27 @@
 
 Docs: http://docs.notecase.apiary.io
 
+## Deployment
+
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
 ## Installation
 ```
-git clone https://github.com/RealImage/qw-notecase.git
-cd qw-notecase
+git clone https://github.com/sudhirj/notecase.git
+cd notecase
 bundle install
-rake db:create:all
-rake db:migrate
+bin/rake db:create:all
+bin/rake db:migrate
 ```
 And then 
 ```
-rails s -p 3003 -b 0.0.0.0
+bin/rails s
 ```
 to run the server locally, or 
 ```
 bundle exec guard 
 ```
 to hack on the wallet itself and run tests continuously.
-
-To run the application in docker, execute the command
-
-```
-docker build -t qw-notecase:0.1 --build-arg QWP_WALLET_TOKEN=<token-secret> --build-arg QWP_DB_USERNAME=<db user name> --build-arg QWP_DB_PASSWORD=<database user password> --build-arg QWP_DB_HOST=<db host> --build-arg QWP_DB_PORT=<db port> --build-arg QWP_DB_NAME=<db name> --build-arg QWP_RAILS_ENV=<environment name (should be development/test/production)> .
-```
-and then 
- ```
-docker run -p 3003:3003 -t qw-notecase:0.1
-```
-
-The wallet srvice will now be reachable in port 3003
 
 ## Docker
 
