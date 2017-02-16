@@ -10,4 +10,8 @@ COPY . .
 
 RUN gem install bundler && bundle install
 
-CMD [ "config/containers/app_cmd.sh" ]
+ENV RAILS_ENV=production
+
+ENV PORT=3000
+
+ENTRYPOINT RAILS_ENV=$RAILS_ENV bundle exec unicorn -p $PORT -c ./config/unicorn.rb
