@@ -8,4 +8,6 @@ Rails.application.routes.draw do
   resources :refunds, except: [:new, :edit, :update, :destroy]
 
   get '/', to: 'home#index'
+
+  get '/ping', to: 'ping#index'
 end
