@@ -4,12 +4,8 @@ Money.default_currency = Money::Currency.new(ENV["DEFAULT_CURRENCY"] || "INR")
 
 DoubleEntry.configure do |config|
   config.define_accounts do |accounts|
-    wallet_positive_values_only = true
-    overdraft = ENV["OVERDRAFT"].to_s.downcase
-    if overdraft == "true" || overdraft == "1" || overdraft == "yes"
-      wallet_positive_values_only = false
-    end
-    accounts.define(identifier: :wallet, scope_identifier: accounts.active_record_scope_identifier(Wallet), positive_only: wallet_positive_values_only)
+    allow_overdraft = ENV.fetch('ALLOW_OVERDRAFT', 0).to_i
+    accounts.define(identifier: :wallet, scope_identifier: accounts.active_record_scope_identifier(Wallet), positive_only: allow_overdraft.zero?)
     accounts.define(identifier: :recharger, scope_identifier: accounts.active_record_scope_identifier(Recharger))
     accounts.define(identifier: :revenue, scope_identifier: accounts.active_record_scope_identifier(Revenue), positive_only: true)
   end
