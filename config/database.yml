@@ -12,5 +12,4 @@ test:
   database: notecase_test
 
 production:
-  <<: *default
-  database: notecase_production
+  url: <%= ENV['DATABASE_URL'] %>
