@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     resources :spends, except: [:new, :edit, :update, :destroy]
     resources :refunds, except: [:new, :edit, :update, :destroy]
 
+    get '/wallets/:wallet_id/statement', to: 'reports#statement'
+
     get '/', to: 'home#index'
   end
 end
