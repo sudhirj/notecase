@@ -1,7 +1,7 @@
 class ReportsController < ApplicationController
   def statement
     wallet_id = params[:wallet_id]
-    limit = params[:count] || 10
+    limit = params[:count]
     offset = params[:offset] || 0
     wallet = Account.find_by(:ref => wallet_id)
     to_date = params[:to_date] ? Date.parse(params[:to_date].to_s) : DateTime.now
@@ -19,11 +19,12 @@ class ReportsController < ApplicationController
 
     transactions = Transaction
                        .joins("INNER join double_entry_lines del on transactions.id = del.detail_id")
-                       .limit(limit)
                        .offset(offset)
                        .where('del.scope = :scope', :scope => wallet.id.to_s)
-                       .where('transactions.created_at > :created_at', :created_at => from_date)
+                       .where('transactions.created_at > :created_at AND transactions.created_at <= :to_date', {:created_at => from_date, :to_date => to_date})
                        .select("transactions.*, del.account, del.scope, del.code, del.amount, del.balance")
+
+    transactions = transactions.limit(limit) unless limit.nil?                   
 
 
     render json: transactions.to_json
