@@ -22,7 +22,7 @@ class ReportsController < ApplicationController
                        .limit(limit)
                        .offset(offset)
                        .where('del.scope = :scope', :scope => wallet.id.to_s)
-                       .where('transactions.created_at > :created_at', :created_at => from_date)
+                       .where('transactions.created_at > :from_date AND transactions.created_at <= :to_date', {:from_date => from_date, :to_date => to_date})
                        .select("transactions.*, del.account, del.scope, del.code, del.amount, del.balance")
 
 
