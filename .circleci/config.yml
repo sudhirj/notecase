@@ -8,9 +8,6 @@ jobs:
       - image: circleci/ruby
     steps:
       - checkout
-      - run:
-          name: Build service
-          command:
 
   deploy_staging:
     machine: true
