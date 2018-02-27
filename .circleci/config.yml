@@ -5,12 +5,12 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.3.0
+      - image: circleci/ruby
     steps:
       - checkout
       - run:
           name: Build service
-          command: gem install bundler && bundle install
+          command:
 
   deploy_staging:
     machine: true
