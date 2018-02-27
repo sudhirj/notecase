@@ -6,11 +6,13 @@ jobs:
   build:
     docker:
       - image: circleci/ruby
+    parallelism: 3
     steps:
       - checkout
 
   deploy_staging:
     machine: true
+    parallelism: 3
     steps:
       - checkout
       - run:
@@ -21,6 +23,7 @@ jobs:
 
   deploy_production:
     machine: true
+    parallelism: 3
     steps:
       - checkout
       - run:
@@ -31,6 +34,7 @@ jobs:
 
   deploy_bwl_staging:
     machine: true
+    parallelism: 3
     steps:
       - checkout
       - run:
@@ -41,6 +45,7 @@ jobs:
 
   deploy_bwl_production:
     machine: true
+    parallelism: 3
     steps:
       - checkout
       - run:
