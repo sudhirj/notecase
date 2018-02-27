@@ -1,14 +1,17 @@
-FROM ruby:2.3.0-slim
+FROM ruby:2.3.0
 
-ENV RAILS_ROOT /var/www/docker
+# throw errors if Gemfile has been modified since Gemfile.lock
+RUN bundle config --global frozen 1
 
-RUN apt-get update -qq && apt-get install -y build-essential libpq-dev postgresql-client && mkdir -p $RAILS_ROOT/tmp/pids
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-WORKDIR $RAILS_ROOT
+COPY Gemfile /usr/src/app/
+COPY Gemfile.lock /usr/src/app/
+RUN bundle install
+COPY . /usr/src/app
 
-COPY . .
+RUN rake assets:precompile RAILS_ENV=production
 
-RUN gem install bundler && bundle install
-
-EXPOSE 5000
-ENTRYPOINT RAILS_ENV=production bundle exec unicorn -p 5000 -c ./config/unicorn.rb
+EXPOSE 3000
+CMD ["rails", "server", "-b", "0.0.0.0"]
