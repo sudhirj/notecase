@@ -10,5 +10,5 @@ COPY . .
 
 RUN gem install bundler && bundle install
 
-EXPOSE $PORT
-ENTRYPOINT RAILS_ENV=$RAILS_ENV bundle exec unicorn -p $PORT -c ./config/unicorn.rb
+EXPOSE 5000
+ENTRYPOINT RAILS_ENV=production bundle exec unicorn -p 5000 -c ./config/unicorn.rb
