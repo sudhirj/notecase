@@ -1,0 +1,106 @@
+# Golang CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-go/ for more details
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby
+    steps:
+      - checkout
+      - run:
+          name: Build service
+          command: gem install bundler && bundle install
+
+  deploy_staging:
+    machine: true
+    steps:
+      - checkout
+      - run:
+              name: Deploy image to ECS Staging
+              command: bash deploy.sh
+              environment:
+                ENV: "staging"
+
+  deploy_production:
+    machine: true
+    steps:
+      - checkout
+      - run:
+              name: Deploy image to ECS Production
+              command: bash deploy.sh
+              environment:
+                ENV: "production"
+
+  deploy_bwl_staging:
+    machine: true
+    steps:
+      - checkout
+      - run:
+              name: Deploy image to ECS Staging
+              command: bash deploy-bwl.sh
+              environment:
+                ENV: "staging"
+
+  deploy_bwl_production:
+    machine: true
+    steps:
+      - checkout
+      - run:
+              name: Deploy image to ECS Production
+              command: bash deploy-bwl.sh
+              environment:
+                ENV: "production"
+
+workflows:
+  version: 2
+  build-test-and-deploy-on-staging:
+    jobs:
+      - build
+      - deploy_staging:
+          requires:
+           - build
+          filters:
+            branches:
+              only:
+                - ecs
+  build-test-and-deploy-on-production:
+    jobs:
+      - build
+      - hold:
+          type: approval
+          requires:
+           - build
+      - deploy_production:
+          requires:
+           - hold
+          filters:
+            branches:
+              only:
+                - ecs
+
+
+  build-test-and-deploy-bwl-on-staging:
+    jobs:
+      - build
+      - deploy_bwl_staging:
+          requires:
+           - build
+          filters:
+            branches:
+              only:
+                - ecs
+  build-test-and-deploy-bwl-on-production:
+    jobs:
+      - build
+      - hold:
+          type: approval
+          requires:
+           - build
+      - deploy_bwl_production:
+          requires:
+           - hold
+          filters:
+            branches:
+              only:
+                - ecs
